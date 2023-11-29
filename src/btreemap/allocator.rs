@@ -29,6 +29,7 @@ const CHUNK_MAGIC: &[u8; 3] = b"CHK"; // btree allocator
 /// # Assumptions:
 ///
 /// * The given memory is not being used by any other data structure.
+#[derive(Clone)]
 pub struct Allocator<M: Memory> {
     // The address in memory where the `AllocatorHeader` is stored.
     header_addr: Address,
@@ -239,6 +240,11 @@ impl<M: Memory> Allocator<M> {
     #[inline]
     pub fn memory(&self) -> &M {
         &self.memory
+    }
+
+    #[inline]
+    pub fn memory_mut(&mut self) -> &mut M {
+        &mut self.memory
     }
 }
 

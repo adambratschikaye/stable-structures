@@ -53,6 +53,7 @@ const ALLOCATOR_OFFSET: usize = 52;
 ///
 /// The implementation is based on the algorithm outlined in "Introduction to Algorithms"
 /// by Cormen et al.
+#[derive(Clone)]
 pub struct BTreeMap<K, V, M>
 where
     K: BoundedStorable + Ord + Clone,
@@ -448,8 +449,12 @@ where
         Some((k, V::from_bytes(Cow::Owned(encoded_v))))
     }
 
-    fn memory(&self) -> &M {
+    pub fn memory(&self) -> &M {
         self.allocator.memory()
+    }
+
+    pub fn memory_mut(&mut self) -> &mut M {
+        self.allocator.memory_mut()
     }
 
     /// Removes a key from the map, returning the previous value at the key if it exists.
